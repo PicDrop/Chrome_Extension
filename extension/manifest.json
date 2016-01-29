@@ -1,16 +1,21 @@
 {
   "manifest_version": 2,
 
-  "name": "GTmetrix Analyzer Plugin",
-  "description": "This extension will analyze a page using GTmetrix",
+  "name": "PicDrop.io",
+  "description": "Save your images easly with Picdrop.io",
   "version": "1.0",
 
   "browser_action": {
    "default_icon": "icon.png"
   },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
 
   "background": {
-    "scripts": ["popup.js"]
+    "scripts": ["background.js"]
   },
 
   "permissions": [
@@ -24,11 +29,12 @@
       "matches": [
         "<all_urls>"
       ],
-      "js": ["jquery-2.2.0.min.js","content.js"],
-      "css": ["test.css"]
+      "js": ["jquery-2.2.0.min.js", "content.js"],
+      "css": ["iframe.css"]
     }
   ],
   "web_accessible_resources": [
-        "text.css"
+        "iframe.css",
+        "iframe.html"
     ]
 }

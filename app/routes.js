@@ -5,9 +5,11 @@ import AddImage from './components/Content/addImage.js'
 
 export default (
   <Route path='/' component={App}>
-    <Route path="addimage" component={AddImage} />
+    <Route path="/addimage" component={AddImage} />
   </Route>
 );
+
+
 
 // <Route path='/' component={Main}>
 //     <Route path="profile/:username" component={AddImage} />

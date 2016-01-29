@@ -62,7 +62,7 @@
 
 	var _reactRedux = __webpack_require__(209);
 
-	var _store = __webpack_require__(226);
+	var _store = __webpack_require__(230);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -24048,7 +24048,7 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _addImage = __webpack_require__(232);
+	var _addImage = __webpack_require__(229);
 
 	var _addImage2 = _interopRequireDefault(_addImage);
 
@@ -24057,7 +24057,7 @@
 	exports.default = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _app2.default },
-	  _react2.default.createElement(_reactRouter.Route, { path: 'addimage', component: _addImage2.default })
+	  _react2.default.createElement(_reactRouter.Route, { path: '/addimage', component: _addImage2.default })
 	);
 
 	// <Route path='/' component={Main}>
@@ -24088,11 +24088,11 @@
 
 	var _reactRedux = __webpack_require__(209);
 
-	var _HeaderWapper = __webpack_require__(229);
+	var _HeaderWapper = __webpack_require__(226);
 
 	var _HeaderWapper2 = _interopRequireDefault(_HeaderWapper);
 
-	var _addImage = __webpack_require__(232);
+	var _addImage = __webpack_require__(229);
 
 	var _addImage2 = _interopRequireDefault(_addImage);
 
@@ -25295,71 +25295,6 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _redux = __webpack_require__(216);
-
-	var _index = __webpack_require__(227);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	var _actions = __webpack_require__(208);
-
-	var _actions2 = _interopRequireDefault(_actions);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var store = (0, _redux.createStore)(_index2.default);
-
-	exports.default = store;
-
-/***/ },
-/* 227 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var defaultState = { url: '' };
-
-	function setUrl(state, url) {
-	  var newState = Object.assign({}, state);
-	  newState.url = url;
-	  return newState;
-	}
-
-	function test(state, test) {
-	  var newState = Object.assign({}, state);
-	  newState.url = test;
-	  return newState;
-	}
-
-	var reducer = function reducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? defaultState : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case 'ADD_URL':
-	      return setUrl(state, action.url);
-	    case 'TEST':
-	      return test(state, action.test);
-	  }
-	  return state;
-	};
-
-	exports.default = reducer;
-
-/***/ },
-/* 228 */,
-/* 229 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	Object.defineProperty(exports, "__esModule", {
@@ -25370,11 +25305,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Header = __webpack_require__(230);
+	var _Header = __webpack_require__(227);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Nav = __webpack_require__(231);
+	var _Nav = __webpack_require__(228);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
@@ -25413,7 +25348,7 @@
 	exports.default = HeaderWapper;
 
 /***/ },
-/* 230 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25484,7 +25419,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 231 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25533,7 +25468,7 @@
 	exports.default = Nav;
 
 /***/ },
-/* 232 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25597,6 +25532,70 @@
 	}(_react.Component);
 
 	exports.default = ContentWrapper;
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(216);
+
+	var _index = __webpack_require__(231);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _actions = __webpack_require__(208);
+
+	var _actions2 = _interopRequireDefault(_actions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var store = (0, _redux.createStore)(_index2.default);
+
+	exports.default = store;
+
+/***/ },
+/* 231 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var defaultState = { url: '' };
+
+	function setUrl(state, url) {
+	  var newState = Object.assign({}, state);
+	  newState.url = url;
+	  return newState;
+	}
+
+	function test(state, test) {
+	  var newState = Object.assign({}, state);
+	  newState.url = test;
+	  return newState;
+	}
+
+	var reducer = function reducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? defaultState : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'ADD_URL':
+	      return setUrl(state, action.url);
+	    case 'TEST':
+	      return test(state, action.test);
+	  }
+	  return state;
+	};
+
+	exports.default = reducer;
 
 /***/ }
 /******/ ]);

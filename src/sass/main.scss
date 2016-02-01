@@ -10,7 +10,12 @@ html, body {
   box-sizing: inherit;
 }
 
-@import '_nav';
+
+html {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
 
 .text-center {
   text-align: center;
@@ -44,9 +49,9 @@ html, body {
     max-width: 300px;
   }
   
-  img {
-    width: 100%;
-  }
+  // img {
+  //   width: 100%;
+  // }
 
 } 
 
@@ -69,6 +74,7 @@ html, body {
 .image_preview {
   width: 300px;
   margin: 0 auto;
+  margin-bottom: 30px;
   .image_box {
     background: #FFF;
     padding: 10px;
@@ -77,3 +83,7 @@ html, body {
     max-width: 100%;
   }
 }
+
+@import '_nav';
+@import '_login';
+@import '_add_image';

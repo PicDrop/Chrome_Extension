@@ -10,7 +10,7 @@ export default (
   <Router history={browserHistory}>
     <Route path='/' component={Main}>
       <Route path='login' component={Login}></Route>
-      <Route path="a" component={App}>
+      <Route path="a" component={App} onEnter={requireAuth}>
         <Route path="addimage" component={AddImage}></Route>
       </Route>
         
@@ -21,13 +21,13 @@ export default (
 
 
 function requireAuth(nextState, replace) {
-  if (!auth.loggedIn()) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
-    })
+  console.log(!!localStorage.getItem("pd.loggedIn"))
+  if (!!localStorage.getItem("pd.loggedIn") === false) {
+    replace('/', 'login')
   }
 }
+
+
 
 // <Route path='/' component={Main}>
 //     <Route path="profile/:username" component={AddImage} />

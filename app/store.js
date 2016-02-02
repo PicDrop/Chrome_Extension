@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware } from 'redux';
-import reducer from './reducers/index.js';
+import reducers from './reducers/index.js';
+import ReduxPromise from 'redux-promise';
 import actions from './actions';
 
 
-const store = createStore(reducer);
-
-
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
+const store = createStoreWithMiddleware(reducers);
 
 export default store;

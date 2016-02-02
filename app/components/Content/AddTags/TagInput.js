@@ -10,7 +10,8 @@ class TagInput extends Component {
     this.updateVal = this.updateVal.bind(this);
     this.addTag = this.addTag.bind(this)
   }
-  addTag() {
+  addTag(event) {
+    event.preventDefault();
     this.props.addTag(this.state.val);
     this.setState({val: ''});
   }

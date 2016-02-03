@@ -17,7 +17,7 @@ export function removeTag (index) {
 }
 
 export function setUser (user) {
-  
+  console.log("calling action");
   return {
     type: 'SET_USER',
     user: user

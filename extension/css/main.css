@@ -1,5 +1,7 @@
 html {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: subpixel-antialiased; }
 
 html, body {
   height: 100%; }
@@ -7,7 +9,7 @@ html, body {
 *, *:before, *:after {
   box-sizing: inherit; }
 
-html {
+body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px; }
 
@@ -76,7 +78,7 @@ html {
       padding: 0;
       margin: 0;
       align-self: center;
-      font-weight: 100;
+      font-weight: 300;
       font-size: 16px;
       padding-left: 25px; }
   .top_nav nav .nav_button {
@@ -93,7 +95,7 @@ html {
       margin: 0;
       align-self: center;
       color: #ED1E79;
-      font-weight: 100;
+      font-weight: 300;
       font-family: 'Open Sans Condensed', sans-serif;
       padding-left: 12px; }
     .top_nav nav .nav_button i {
@@ -202,8 +204,9 @@ button {
 .add_image .folder_name {
   display: block;
   color: #444;
-  font-weight: 100;
-  padding-bottom: 10px; }
+  font-weight: 300;
+  padding-bottom: 10px;
+  font-size: 16px; }
 
 .add_image .tags {
   padding-right: 25px;

@@ -4,7 +4,7 @@ import { browserHistory, Router, Route, Link } from 'react-router';
 import Main from './components/Main';
 import AddImage from './components/Content/addImage.js'
 import Login from './components/Login';
-
+import { isAuth } from './Auth';
 
 export default (
   <Router history={browserHistory}>
@@ -20,17 +20,16 @@ export default (
 );
 
 
+
+
 function requireAuth(nextState, replace) {
-  console.log(!!localStorage.getItem("pd.loggedIn"))
-  if (!!localStorage.getItem("pd.loggedIn") === false) {
-    replace('/', 'login')
-  }
+    // If user is not logged in redirect to login
+    if (!isAuth()) {
+      replace('/', 'login')
+    }
 }
 
+// chrome.extension.sendRequest({cmd: "load"}, function(response) {
+//   console.log("response", response, response.pd_loggedIn)
+// });
 
-
-// <Route path='/' component={Main}>
-//     <Route path="profile/:username" component={AddImage} />
-    
-//     <IndexRoute component={Home} />
-//   </Route>

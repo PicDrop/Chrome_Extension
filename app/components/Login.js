@@ -17,8 +17,7 @@ class Login extends Component {
     axios.post(ROOT_URL + 'auth/login', data)
       .then((data) => {
         this.props.setUser(data.data);
-        localStorage.setItem('pd.loggedIn', true);
-        localStorage.setItem('pd.token', data.data.token);
+        chrome.extension.sendRequest({cmd: "save", data: {pd_token: data.data.token, pd_loggedIn: true, user: data.data.user}});
         this.props.history.push({ pathname: '/a' });
 
       }, (err) => {

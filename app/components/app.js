@@ -8,17 +8,13 @@ import Content from './Content/addImage.js'
 class App extends Component {
   constructor() {
     super();
-    this.test = this.test.bind(this)
   }
-  test() {
-    console.log("change state to /AddPic");
-    this.props.history.pushState(null, '/addimage');
-  }
+  
   render() {
     return (
       <div id="pd_ex">
         <Header />
-        <div className="contentarea">
+        <div className="height_100">
         {this.props.children}
         </div>
         <div id="img_placeholder">

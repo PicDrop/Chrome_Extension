@@ -1,0 +1,35 @@
+.dashboard {
+  padding: 30px 25px;
+  overflow: auto;
+  height: calc(100% - 100px);
+
+  h4 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 100px;
+    color: #444;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .folder {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    transition: 0.4s;
+    color: #555;
+    font-weight: 500;
+    
+    .name {
+      align-self: center;
+    }
+
+    .number {
+      align-self: center;
+    }
+  }
+}

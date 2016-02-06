@@ -21,10 +21,9 @@ class TagInput extends Component {
     });
   }
   render() {
-    console.log(this);
     return (
       <form onSubmit={this.addTag}>
-        <div className="input-form">
+        <div className="input_form">
           <input type="text" placeholder="Add a tag" value={this.state.val} onChange={this.updateVal}/>
         </div>
       </form>

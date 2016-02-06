@@ -1,20 +1,22 @@
 import React from 'react';
 import App from './components/app.js';
-import { browserHistory, Router, Route, Link } from 'react-router';
+import { browserHistory, Router, Route, Link, IndexRoute } from 'react-router';
 import Main from './components/Main';
 import AddImage from './components/Content/addImage.js'
 import Login from './components/Login';
 import { isAuth } from './Auth';
+import Dashboard from './components/Dash/Main';
+import FolderView from './components/FolderView/Main';
 
 export default (
   <Router history={browserHistory}>
     <Route path='/' component={Main}>
       <Route path='login' component={Login}></Route>
       <Route path="a" component={App} onEnter={requireAuth}>
+        <IndexRoute component={Dashboard}/>
+        <Route path="folder/:name" component={FolderView}></Route>
         <Route path="addimage" component={AddImage}></Route>
       </Route>
-        
-
     </Route>
   </Router>
 );

@@ -4,7 +4,7 @@ import { Router } from 'react-router';
 import routes from './routes.js';
 import { Provider } from 'react-redux';
 import Store from './store';
-import { setUser } from './actions.js'
+import { setUser, addUrl } from './actions';
 
 
 ReactDOM.render(
@@ -36,8 +36,11 @@ chrome.runtime.onMessage.addListener(
     
     if (request.url) {
       var url = request.url.srcUrl;
-      console.log("url", url)
-      // Store.dispatch(Actions.addUrl(url));
+      console.log("request object", request)
+      
+      Store.dispatch(addUrl(request.url));
+      
+      console.log("state", Store.getState())
       console.log( parent.document )
       if ( document.getElementById("picdrop").className === "closed" ) {
         document.getElementById("picdrop").className = "";
@@ -47,18 +50,6 @@ chrome.runtime.onMessage.addListener(
 
   });
 
-// function test (data) {
-//   console.log(Store)
-//   Store.dispatch(function () {
-//     return {
-//     type: 'SET_USER',
-//     user: {"name": "working"}
-//   }
-// })
-//   console.log("get state", Store.getState())  
-//   console.log("calling test FN", data)
-
-// }
 
 
 

@@ -1,25 +1,12 @@
-const defaultState = {url: ''};
+import { combineReducers } from 'redux';
+import UploadImage from './reducer_uploadImage';
+import User from './reducer_user';
+import { reducer as formReducer } from 'redux-form'
 
-function setUrl(state, url) {
-  const newState = Object.assign({}, state);
-  newState.url = url;
-  return newState;
-}
+const rootReducer = combineReducers({
+  uploadImage: UploadImage,
+  user: User,
+  form: formReducer
+});
 
-function test (state, test) {
-  const newState = Object.assign({}, state);
-  newState.url = test;
-  return newState;
-}
-
-const reducer = (state = defaultState, action) => {
-  switch(action.type){
-    case 'ADD_URL' :
-      return setUrl(state, action.url);
-    case 'TEST':
-      return test(state, action.test);
-  }
-  return state;
-};
-
-export default reducer;
+export default rootReducer;

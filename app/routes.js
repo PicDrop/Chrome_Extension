@@ -1,18 +1,35 @@
 import React from 'react';
 import App from './components/app.js';
-import { Route, IndexRoute } from 'react-router';
+import { browserHistory, Router, Route, Link } from 'react-router';
+import Main from './components/Main';
 import AddImage from './components/Content/addImage.js'
+import Login from './components/Login';
+import { isAuth } from './Auth';
 
 export default (
-  <Route path='/' component={App}>
-    <Route path="/addimage" component={AddImage} />
-  </Route>
+  <Router history={browserHistory}>
+    <Route path='/' component={Main}>
+      <Route path='login' component={Login}></Route>
+      <Route path="a" component={App} onEnter={requireAuth}>
+        <Route path="addimage" component={AddImage}></Route>
+      </Route>
+        
+
+    </Route>
+  </Router>
 );
 
 
 
-// <Route path='/' component={Main}>
-//     <Route path="profile/:username" component={AddImage} />
-    
-//     <IndexRoute component={Home} />
-//   </Route>
+
+function requireAuth(nextState, replace) {
+    // If user is not logged in redirect to login
+    if (!isAuth()) {
+      replace('/', 'login')
+    }
+}
+
+// chrome.extension.sendRequest({cmd: "load"}, function(response) {
+//   console.log("response", response, response.pd_loggedIn)
+// });
+

@@ -24,7 +24,7 @@ class App extends Component {
         <div id="img_placeholder">
           <img src={this.props.url}/>
         </div>
-        <button id="pd_submit" onClick={this.test}>Upload</button>
+        
       </div>
     );
   }

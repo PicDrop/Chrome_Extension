@@ -8,7 +8,7 @@ class HeaderWapper extends Component {
     return (
       <div className="top_nav">
         <Header />
-        <Nav />
+        
       </div>
     );
   };

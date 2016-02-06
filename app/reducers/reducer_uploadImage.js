@@ -1,8 +1,12 @@
-const defaultState = {url: '', tags: []};
+import { domainParse } from '../utils'
+const defaultState = {url: '', tags: [], folder: 'test', domain: '', note: ''};
 
-function setUrl(state, url) {
+
+
+function addUrl(state, data) {
   const newState = Object.assign({}, state);
-  newState.url = url;
+  newState.url = data.srcUrl;
+  newState.domain = domainParse(data.pageUrl);
   return newState;
 }
 
@@ -19,16 +23,23 @@ function removeTag (state, index) {
   return newState;
 }
 
+function updateNotes (state, note) {
+  const newState = Object.assign({}, state);
+  newState.note = note;
+  return newState;
+}
 
 
 const reducer = (state = defaultState, action) => {
   switch(action.type){
     case 'ADD_URL' :
-      return setUrl(state, action.url);
+      return addUrl(state, action.payload);
     case 'ADD_TAG':
       return addTag(state, action.tag);
     case 'REMOVE_TAG':
       return removeTag(state, action.index);
+    case 'UPDATE_NOTES':
+      return updateNotes(state, action.note)
     default:
     return state;
   }

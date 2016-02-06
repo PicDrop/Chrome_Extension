@@ -13,12 +13,18 @@ html, body {
   box-sizing: inherit;
 }
 
+ul, ol {
+  list-style-type: none;
+}
 
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
 }
 
+.height_100 {
+  height: 100%;
+}
 
 .text-center {
   text-align: center;
@@ -32,7 +38,7 @@ body {
   width: 400px;
   height: 100%;
   background: #FFF;
-  border-left: 1px solid #eee;
+  //border-left: 1px solid #eee;
   box-shadow: -2px 0px 4px 0px rgba(0, 0, 0, 0.1);
   z-index: 9999;
   transition: 0.4s; 
@@ -45,7 +51,7 @@ body {
 
 #pd_ex {
   
-  background: #EEEEEE;
+  background: #FFF;
   height: 100%;
 
   #img_placeholder {
@@ -75,12 +81,15 @@ body {
 }
 
 .image_preview {
-  width: 300px;
+  //width: 300px;
+  text-align: center;
   margin: 0 auto;
   margin-bottom: 30px;
   .image_box {
     background: #FFF;
     padding: 10px;
+    display: inline-block;
+    max-width: 300px;
   }
   img {
     max-width: 100%;
@@ -90,3 +99,5 @@ body {
 @import '_nav';
 @import '_login';
 @import '_add_image';
+@import '_dashboard';
+@import '_folder_view';

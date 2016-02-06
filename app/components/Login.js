@@ -27,8 +27,8 @@ class Login extends Component {
   }
 
   render() {
-    const { fields: { username, password }, handleSubmit } = this.props;
-    console.log(this.props)
+    const { fields: { email, password }, handleSubmit } = this.props;
+  
     return (
       <section className="login">
         <div>
@@ -41,7 +41,7 @@ class Login extends Component {
         <div className="login_container">
           <form onSubmit={handleSubmit(this.submit)}>
             <div className="form_input">
-              <input type="text" placeholder="Username" { ...username } />
+              <input type="text" placeholder="Username" { ...email } />
             </div>
             <div className="form_input">
               <input type="password" placeholder="Password" { ...password }/>
@@ -77,5 +77,5 @@ const mapDispatchToProps = (dispatch) => {
 
 export default reduxForm({
   form: "login",
-  fields: ['username', 'password']
+  fields: ['email', 'password']
 }, null, mapDispatchToProps)(Login)

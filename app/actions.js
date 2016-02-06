@@ -1,5 +1,5 @@
 import axios from 'axios';
-// const ROOT_URL = 'http://localhost:3000/api/'
+// const ROOT_URL = 'http://localhost:4000/api/'
 
 
 export function addTag (tag) {
@@ -17,11 +17,24 @@ export function removeTag (index) {
 }
 
 export function setUser (user) {
-  console.log("calling action");
   return {
     type: 'SET_USER',
     user: user
   };
+}
+
+export function addUrl (data) {
+  return {
+    type: 'ADD_URL',
+    payload: data
+  };
+}
+
+export function updateNotes (note) {
+  return {
+    type: "UPDATE_NOTES",
+    note: note
+  }
 }
 
 

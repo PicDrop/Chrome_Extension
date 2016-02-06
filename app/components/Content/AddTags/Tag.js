@@ -9,11 +9,9 @@ class Tag extends Component {
     this.remove = this.remove.bind(this);
   }
   remove() {
-    console.log("clicking")
     this.props.removeTag(this.props.index)
   }
   render() {
-    console.log(this)
     return (
         <span className="tag">{this.props.name}<i className="material-icons" onClick={this.remove}>clear</i></span>
     );

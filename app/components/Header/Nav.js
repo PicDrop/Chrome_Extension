@@ -16,7 +16,7 @@ class Nav extends Component {
   uploadImage() {
     axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.user.token;
     console.log("sending - ", this.props.imageInfo)
-    axios.post(ROOT_URL + 'user/drop', this.props.imageInfo)
+    axios.post(ROOT_URL + 'user/createDrop', this.props.imageInfo)
       .then((res) => {
         console.log('success', res);
         this.props.history.push({ pathname: '/a' });

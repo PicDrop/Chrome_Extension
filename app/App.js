@@ -19,13 +19,13 @@ ReactDOM.render(
 
 //load tab data
 chrome.extension.sendRequest({cmd: "load"}, function(response) {
-   console.log(response)
-   var data = response.user;
-   data.token = response.pd_token;
-   console.log(data); 
+   console.log("running")
+   console.log("response", response)
+   
 
-    if (response.pd_loggedIn) {  
-      Store.dispatch(setUser(data));
+    if (response.pd_loggedIn) { 
+      console.log("trying to set user") 
+      Store.dispatch(setUser(response.user));
     }
 
 });

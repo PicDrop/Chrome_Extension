@@ -24,10 +24,13 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 // Setting / Getting localStorage on background 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     if(request.cmd == "save") {
+        console.log("saving local Storage")
         localStorage.setItem("picdrop", JSON.stringify(request.data));
     }
 
     if(request.cmd == "load") {
+        console.log("loading local Storage")
+        console.log("loading local Storage data - ", JSON.parse(localStorage.getItem("picdrop")))
         sendResponse(JSON.parse(localStorage.getItem("picdrop")));
     }
 });

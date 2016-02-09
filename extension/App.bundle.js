@@ -30423,7 +30423,7 @@
 /* 302 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -30438,12 +30438,11 @@
 	}
 
 	function setUser(state, user) {
-	  console.log("incoming state", state);
-	  console.log("incoming user", user);
 	  var newState = Object.assign({}, state, user);
 	  newState.isAuth = true;
-
-	  console.log("setting user", newState);
+	  for (var key in newState.folders) {
+	    delete newState.folders[key].id;
+	  }
 	  return newState;
 	}
 
@@ -31542,13 +31541,9 @@
 	}(_react.Component);
 
 	var mapToStateProps = function mapToStateProps(state, props) {
-	  console.log("inside map", props);
-
 	  var folder = state.user.folders[props.params.name];
-	  delete folder["id"];
 	  var picIDs = Object.keys(folder);
 	  var folderPics = picIDs.map(function (picID) {
-	    if (picID === "id") return;
 	    return state.user.userPics[picID];
 	  });
 

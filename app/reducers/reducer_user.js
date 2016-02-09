@@ -8,12 +8,11 @@ function login(state, user) {
 }
 
 function setUser(state, user) {
-  console.log("incoming state", state);
-  console.log("incoming user", user);
-  const newState = Object.assign({}, state, user );
+  const newState = Object.assign({}, state, user);
   newState.isAuth = true;
-  
-  console.log("setting user", newState);
+  for (var key in newState.folders) {
+    delete newState.folders[key].id;
+  }  
   return newState;
 }
 

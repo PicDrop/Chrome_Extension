@@ -70,6 +70,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var chromeID = 'nlmfjalfhbaeclmijpiamgealocldiab';
+
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: _store2.default },
@@ -82,11 +84,7 @@
 
 	//load tab data
 	chrome.extension.sendRequest({ cmd: "load" }, function (response) {
-	  console.log("running");
-	  console.log("response", response);
-
 	  if (response.pd_loggedIn) {
-	    console.log("trying to set user");
 	    _store2.default.dispatch((0, _actions.setUser)(response.user));
 	  }
 	});
@@ -95,16 +93,14 @@
 
 	  if (request.url) {
 	    var url = request.url.srcUrl;
-	    console.log("request object", request);
 
+	    // Adding url to State
 	    _store2.default.dispatch((0, _actions.addUrl)(request.url));
 
-	    console.log("state", _store2.default.getState());
-	    console.log(parent.document);
 	    if (document.getElementById("picdrop").className === "closed") {
 	      document.getElementById("picdrop").className = "";
 	    }
-	    document.getElementById("picdrop").src = "chrome-extension://nlmfjalfhbaeclmijpiamgealocldiab/iframe.html#/a/addimage";
+	    document.getElementById("picdrop").src = "chrome-extension://" + chromeID + "/iframe.html#/a/addimage";
 	  }
 	});
 
@@ -24167,7 +24163,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'pd_ex' },
-	        _react2.default.createElement(_HeaderWapper2.default, null),
+	        _react2.default.createElement(_HeaderWapper2.default, { history: this.props.history }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'height_100' },
@@ -24209,6 +24205,9 @@
 	exports.setUser = setUser;
 	exports.addUrl = addUrl;
 	exports.updateNotes = updateNotes;
+	exports.setCurrentFolder = setCurrentFolder;
+	exports.setCurrentView = setCurrentView;
+	exports.setViewAndFolder = setViewAndFolder;
 
 	var _axios = __webpack_require__(209);
 
@@ -24251,6 +24250,28 @@
 	  return {
 	    type: "UPDATE_NOTES",
 	    note: note
+	  };
+	}
+
+	function setCurrentFolder(folder) {
+	  return {
+	    type: 'SET_CURRENT_FOLDER',
+	    folder: folder
+	  };
+	}
+
+	function setCurrentView(view) {
+	  return {
+	    type: 'SET_CURRENT_VIEW',
+	    view: view
+	  };
+	}
+
+	function setViewAndFolder(view, folder) {
+	  return {
+	    type: 'SET_CURRENT_VIEW_FOLDER',
+	    view: view,
+	    folder: folder
 	  };
 	}
 
@@ -26560,10 +26581,11 @@
 	  _createClass(HeaderWapper, [{
 	    key: 'render',
 	    value: function render() {
+	      console.log("this props from headerwrapper", this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'top_nav' },
-	        _react2.default.createElement(_Header2.default, null)
+	        _react2.default.createElement(_Header2.default, { history: this.props.history })
 	      );
 	    }
 	  }]);
@@ -26577,7 +26599,7 @@
 /* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -26588,6 +26610,12 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(226);
+
+	var _redux = __webpack_require__(233);
+
+	var _actions = __webpack_require__(208);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26603,36 +26631,58 @@
 	  function Header() {
 	    _classCallCheck(this, Header);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this));
+
+	    _this.showHamburgOrArrow = _this.showHamburgOrArrow.bind(_this);
+	    _this.goBack = _this.goBack.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(Header, [{
-	    key: "render",
+	    key: 'showHamburgOrArrow',
+	    value: function showHamburgOrArrow() {
+	      if (this.props.view === 'main') {
+	        return _react2.default.createElement(
+	          'i',
+	          { className: 'material-icons' },
+	          'menu'
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'i',
+	        { onClick: this.goBack, className: 'material-icons' },
+	        'arrow_back'
+	      );
+	    }
+	  }, {
+	    key: 'goBack',
+	    value: function goBack() {
+	      this.props.setViewAndFolder('main', null);
+	      this.props.history.goBack();
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "header",
+	        'header',
 	        null,
 	        _react2.default.createElement(
-	          "div",
-	          { className: "flex-1" },
-	          _react2.default.createElement(
-	            "i",
-	            { className: "material-icons" },
-	            "menu"
-	          )
+	          'div',
+	          { className: 'flex-1' },
+	          this.showHamburgOrArrow()
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "flex text-center" },
-	          _react2.default.createElement("img", { src: "logo.svg" })
+	          'div',
+	          { className: 'flex text-center' },
+	          _react2.default.createElement('img', { src: 'logo.svg' })
 	        ),
 	        _react2.default.createElement(
-	          "div",
-	          { className: "flex-1" },
+	          'div',
+	          { className: 'flex-1' },
 	          _react2.default.createElement(
-	            "i",
-	            { className: "material-icons" },
-	            "clear"
+	            'i',
+	            { className: 'material-icons' },
+	            'clear'
 	          )
 	        )
 	      );
@@ -26642,7 +26692,17 @@
 	  return Header;
 	}(_react.Component);
 
-	exports.default = Header;
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    view: state.app.currentView
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return (0, _redux.bindActionCreators)({ setViewAndFolder: _actions.setViewAndFolder }, dispatch);
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Header);
 
 /***/ },
 /* 246 */
@@ -30331,12 +30391,17 @@
 
 	var _reduxForm = __webpack_require__(254);
 
+	var _reducer_app = __webpack_require__(317);
+
+	var _reducer_app2 = _interopRequireDefault(_reducer_app);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var rootReducer = (0, _redux.combineReducers)({
 	  uploadImage: _reducer_uploadImage2.default,
 	  user: _reducer_user2.default,
-	  form: _reduxForm.reducer
+	  form: _reduxForm.reducer,
+	  app: _reducer_app2.default
 	});
 
 	exports.default = rootReducer;
@@ -31420,6 +31485,12 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRedux = __webpack_require__(226);
+
+	var _redux = __webpack_require__(233);
+
+	var _actions = __webpack_require__(208);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31443,8 +31514,7 @@
 	  _createClass(Folder, [{
 	    key: 'selectFolder',
 	    value: function selectFolder() {
-	      console.log("folder Clicked");
-	      console.log(this.props.history);
+	      this.props.setViewAndFolder('folder', this.props.folderName);
 	      this.props.history.push('/a/folder/' + this.props.folderName);
 	    }
 	  }, {
@@ -31470,7 +31540,11 @@
 	  return Folder;
 	}(_react.Component);
 
-	exports.default = Folder;
+	var mapDistpatToState = function mapDistpatToState(dispatch) {
+	  return (0, _redux.bindActionCreators)({ setViewAndFolder: _actions.setViewAndFolder }, dispatch);
+	};
+
+	exports.default = (0, _reactRedux.connect)(null, mapDistpatToState)(Folder);
 
 /***/ },
 /* 313 */
@@ -31749,6 +31823,54 @@
 	}(_react.Component);
 
 	exports.default = Nav;
+
+/***/ },
+/* 317 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var defaultState = { currentView: 'main', currentFolder: '' };
+
+	var setCurrentView = function setCurrentView(state, view) {
+	  var newState = Object.assign({}, state);
+	  newState.currentView = view;
+	  return newState;
+	};
+
+	var setCurrentFolder = function setCurrentFolder(state, folder) {
+	  var newState = Object.assign({}, state);
+	  newState.currentFolder = folder;
+	  return newState;
+	};
+
+	var setCurrentViewFolder = function setCurrentViewFolder(state, view, folder) {
+	  var newState = Object.assign({}, state);
+	  newState.currentView = view;
+	  newState.currentFolder = folder;
+	  return newState;
+	};
+
+	var reducer = function reducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? defaultState : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SET_CURRENT_VIEW':
+	      return setCurrentView(state, action.view);
+	    case 'SET_CURRENT_FOLDER':
+	      return setCurrentFolder(state, action.folder);
+	    case 'SET_CURRENT_VIEW_FOLDER':
+	      return setCurrentViewFolder(state, action.view, action.folder);
+	    default:
+	      return state;
+	  }
+	};
+
+	exports.default = reducer;
 
 /***/ }
 /******/ ]);

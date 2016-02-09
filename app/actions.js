@@ -38,4 +38,26 @@ export function updateNotes (note) {
   }
 }
 
+export function setCurrentFolder (folder) {
+  return {
+    type: 'SET_CURRENT_FOLDER',
+    folder: folder
+  }
+}
+
+export function setCurrentView (view) {
+  return {
+    type: 'SET_CURRENT_VIEW',
+    view: view
+  };
+}
+
+export function setViewAndFolder (view, folder) {
+  return {
+    type: 'SET_CURRENT_VIEW_FOLDER',
+    view: view,
+    folder: folder
+  };
+}
+
 

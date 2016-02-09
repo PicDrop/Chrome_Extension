@@ -24,7 +24,7 @@ const reducer = (state = defaultState, action) => {
     case 'SET_USER':
       return setUser(state, action.user);
     default:
-    return state;
+      return state;
   }
 
 };

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setViewAndFolder } from '../../actions';
 class Folder extends Component {
   constructor(){
     super();
     this.selectFolder = this.selectFolder.bind(this)
   }
   selectFolder() {
-    console.log("folder Clicked")
-    console.log(this.props.history)
+    this.props.setViewAndFolder('folder', this.props.folderName)
     this.props.history.push('/a/folder/' + this.props.folderName)
   }
   render() {
@@ -20,4 +21,8 @@ class Folder extends Component {
   }
 }
 
-export default Folder;
+const mapDistpatToState = (dispatch) => {
+  return bindActionCreators( { setViewAndFolder }, dispatch);
+};
+
+export default connect(null, mapDistpatToState)(Folder);

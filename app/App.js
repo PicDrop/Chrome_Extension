@@ -5,7 +5,7 @@ import routes from './routes.js';
 import { Provider } from 'react-redux';
 import Store from './store';
 import { setUser, addUrl } from './actions';
-
+const chromeID = 'nlmfjalfhbaeclmijpiamgealocldiab'
 
 ReactDOM.render(
   <Provider store={Store}>
@@ -19,12 +19,7 @@ ReactDOM.render(
 
 //load tab data
 chrome.extension.sendRequest({cmd: "load"}, function(response) {
-   console.log("running")
-   console.log("response", response)
-   
-
     if (response.pd_loggedIn) { 
-      console.log("trying to set user") 
       Store.dispatch(setUser(response.user));
     }
 
@@ -36,16 +31,14 @@ chrome.runtime.onMessage.addListener(
     
     if (request.url) {
       var url = request.url.srcUrl;
-      console.log("request object", request)
       
+      // Adding url to State
       Store.dispatch(addUrl(request.url));
-      
-      console.log("state", Store.getState())
-      console.log( parent.document )
+  
       if ( document.getElementById("picdrop").className === "closed" ) {
         document.getElementById("picdrop").className = "";
       }
-      document.getElementById("picdrop").src = "chrome-extension://nlmfjalfhbaeclmijpiamgealocldiab/iframe.html#/a/addimage"
+      document.getElementById("picdrop").src = "chrome-extension://" + chromeID + "/iframe.html#/a/addimage"
     }
 
   });

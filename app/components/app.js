@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div id="pd_ex">
-        <Header />
+        <Header history={this.props.history}/>
         <div className="height_100">
         {this.props.children}
         </div>

@@ -10,25 +10,42 @@ class Login extends Component {
   constructor() {
     super();
     this.submit = this.submit.bind(this);
+    this.pushToNextState = this.pushToNextState.bind(this);
   }
 
-  submit(data) {
-        
+  submit(data) {  
+    console.log("posting to API")  
     axios.post(ROOT_URL + 'auth/login', data)
       .then((data) => {
         this.props.setUser(data.data);
         chrome.extension.sendRequest({cmd: "save", data: {pd_loggedIn: true, user: data.data}});
-        this.props.history.push({ pathname: '/a' });
+        this.pushToNextState()
 
       }, (err) => {
         console.log(err)
-      });
+    });
+  }
 
+  pushToNextState() {
+    const path = this.props.location.search.substr(1);
+     if ( this.props.loggedIn && path.length > 1 ) {
+      this.props.history.push({pathname: path});
+     } else {
+      this.props.history.push({ pathname: '/a' });
+    }
+  }
+
+  componentDidUpdate() {
+   
+   const path = this.props.location.search.substr(1);
+   if ( this.props.loggedIn && path.length > 1) {
+     console.log("pushing")
+    this.props.history.push({pathname: path});
+   }
   }
 
   render() {
     const { fields: { email, password }, handleSubmit } = this.props;
-  
     return (
       <section className="login">
         <div>
@@ -59,13 +76,11 @@ class Login extends Component {
   };
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     user: state.user,
-//     uploadImage: state.uploadImage
-
-//   }
-// }
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.user.isAuth,
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators( { setUser } , dispatch );
@@ -78,4 +93,4 @@ const mapDispatchToProps = (dispatch) => {
 export default reduxForm({
   form: "login",
   fields: ['email', 'password']
-}, null, mapDispatchToProps)(Login)
+}, mapStateToProps, mapDispatchToProps)(Login)

@@ -25,10 +25,10 @@ export default (
 
 
 function requireAuth(nextState, replace) {
-    // If user is not logged in redirect to login
-    if (!isAuth()) {
-      replace('/', 'login')
-    }
+  // If user is not logged in redirect to login
+  if ( !isAuth() ) {
+    replace('/', 'login?' + nextState.location.pathname);
+  }
 }
 
 // chrome.extension.sendRequest({cmd: "load"}, function(response) {

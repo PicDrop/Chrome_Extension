@@ -35,14 +35,21 @@ export function updateNotes (note) {
   return {
     type: "UPDATE_NOTES",
     note: note
-  }
+  };
+}
+
+export function updateDescription (value) {
+  return {
+    type: "UPDATE_DESCRIPTION",
+    value: value
+  };
 }
 
 export function setCurrentFolder (folder) {
   return {
     type: 'SET_CURRENT_FOLDER',
     folder: folder
-  }
+  };
 }
 
 export function setCurrentView (view) {

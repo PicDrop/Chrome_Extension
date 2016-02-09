@@ -16,8 +16,9 @@ const setCurrentViewFolder = (state, view, folder) => {
   const newState = Object.assign({}, state);
   newState.currentView = view;
   newState.currentFolder = folder;
+  console.log(newState);
   return newState;
-}
+};
 
 
 const reducer = (state = defaultState, action) => {

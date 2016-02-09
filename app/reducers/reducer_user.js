@@ -8,11 +8,13 @@ function login(state, user) {
 }
 
 function setUser(state, user) {
+  console.log("setting user - setUser")
   const newState = Object.assign({}, state, user);
   newState.isAuth = true;
   for (var key in newState.folders) {
     delete newState.folders[key].id;
   }  
+  console.log("newState", newState)
   return newState;
 }
 

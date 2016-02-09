@@ -14,32 +14,23 @@ ReactDOM.render(
   document.getElementById('picdrop_ex')
 );
 
-
-
-
-//load tab data
+// load tab data and setUser
 chrome.extension.sendRequest({cmd: 'load'}, function(response) {
   if (response.pd_loggedIn) { 
     Store.dispatch(setUser(response.user));
   }
 });
 
-
+// Listening for Content messages
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    
-    if (request.url) {
-      
-      // Adding url to State
-      Store.dispatch(addUrl(request.url));
-  
-      if ( document.getElementById('picdrop').className === 'closed' ) {
-        document.getElementById('picdrop').className = '';
-      }
-      document.getElementById('picdrop').src = 'chrome-extension://' + chromeID + '/iframe.html#/a/addimage';
+    if (request.setImage) {
+      // Adding image data to State for Addimage View
+      Store.dispatch(addUrl(request.setImage));
     }
+});
 
-  });
+
 
 
 

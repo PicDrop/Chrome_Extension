@@ -82,24 +82,18 @@
 	  )
 	), document.getElementById('picdrop_ex'));
 
-	//load tab data
+	// load tab data and setUser
 	chrome.extension.sendRequest({ cmd: 'load' }, function (response) {
 	  if (response.pd_loggedIn) {
 	    _store2.default.dispatch((0, _actions.setUser)(response.user));
 	  }
 	});
 
+	// Listening for Content messages
 	chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-
-	  if (request.url) {
-
-	    // Adding url to State
-	    _store2.default.dispatch((0, _actions.addUrl)(request.url));
-
-	    if (document.getElementById('picdrop').className === 'closed') {
-	      document.getElementById('picdrop').className = '';
-	    }
-	    document.getElementById('picdrop').src = 'chrome-extension://' + chromeID + '/iframe.html#/a/addimage';
+	  if (request.setImage) {
+	    // Adding image data to State for Addimage View
+	    _store2.default.dispatch((0, _actions.addUrl)(request.setImage));
 	  }
 	});
 
@@ -24101,7 +24095,7 @@
 	function requireAuth(nextState, replace) {
 	  // If user is not logged in redirect to login
 	  if (!(0, _Auth.isAuth)()) {
-	    replace('/', 'login');
+	    replace('/', 'login?' + nextState.location.pathname);
 	  }
 	}
 
@@ -24204,6 +24198,7 @@
 	exports.setUser = setUser;
 	exports.addUrl = addUrl;
 	exports.updateNotes = updateNotes;
+	exports.updateDescription = updateDescription;
 	exports.setCurrentFolder = setCurrentFolder;
 	exports.setCurrentView = setCurrentView;
 	exports.setViewAndFolder = setViewAndFolder;
@@ -24249,6 +24244,13 @@
 	  return {
 	    type: "UPDATE_NOTES",
 	    note: note
+	  };
+	}
+
+	function updateDescription(value) {
+	  return {
+	    type: "UPDATE_DESCRIPTION",
+	    value: value
 	  };
 	}
 
@@ -26873,6 +26875,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ContentWrapper).call(this, props));
 
 	    _this.updateNoteVal = _this.updateNoteVal.bind(_this);
+	    _this.updateDescriptionVal = _this.updateDescriptionVal.bind(_this);
 	    return _this;
 	  }
 
@@ -26882,9 +26885,13 @@
 	      this.props.updateNotes(e.target.value);
 	    }
 	  }, {
+	    key: 'updateDescriptionVal',
+	    value: function updateDescriptionVal(e) {
+	      this.props.updateDescription(e.target.value);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'height_100' },
@@ -26915,7 +26922,21 @@
 	              _react2.default.createElement(
 	                'span',
 	                { className: 'folder_name' },
-	                'Iphone designs'
+	                this.props.folder
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'section',
+	              { className: 'tags' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'title_header' },
+	                'DESCRIPTION'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'input_form' },
+	                _react2.default.createElement('input', { type: 'text', placeholder: 'Add a title', value: this.props.description, onChange: this.updateDescriptionVal })
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -26959,8 +26980,7 @@
 	                  onChange: this.updateNoteVal,
 	                  placeholder: 'Add Some Notes...' })
 	              )
-	            ),
-	            _react2.default.createElement('form', null)
+	            )
 	          )
 	        )
 	      );
@@ -26975,12 +26995,14 @@
 	    tags: state.uploadImage.tags,
 	    url: state.uploadImage.url,
 	    domain: state.uploadImage.domain,
-	    note: state.uploadImage.note
+	    note: state.uploadImage.note,
+	    folder: state.app.currentFolder,
+	    description: state.uploadImage.description
 	  };
 	}
 
 	function mapDispatchToState(dispatch) {
-	  return (0, _redux.bindActionCreators)({ updateNotes: _actions.updateNotes }, dispatch);
+	  return (0, _redux.bindActionCreators)({ updateNotes: _actions.updateNotes, updateDescription: _actions.updateDescription }, dispatch);
 	}
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToState)(ContentWrapper);
@@ -27299,6 +27321,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Login).call(this));
 
 	    _this.submit = _this.submit.bind(_this);
+	    _this.pushToNextState = _this.pushToNextState.bind(_this);
 	    return _this;
 	  }
 
@@ -27307,13 +27330,34 @@
 	    value: function submit(data) {
 	      var _this2 = this;
 
+	      console.log("posting to API");
 	      _axios2.default.post(_rooturl2.default + 'auth/login', data).then(function (data) {
 	        _this2.props.setUser(data.data);
 	        chrome.extension.sendRequest({ cmd: "save", data: { pd_loggedIn: true, user: data.data } });
-	        _this2.props.history.push({ pathname: '/a' });
+	        _this2.pushToNextState();
 	      }, function (err) {
 	        console.log(err);
 	      });
+	    }
+	  }, {
+	    key: 'pushToNextState',
+	    value: function pushToNextState() {
+	      var path = this.props.location.search.substr(1);
+	      if (this.props.loggedIn && path.length > 1) {
+	        this.props.history.push({ pathname: path });
+	      } else {
+	        this.props.history.push({ pathname: '/a' });
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+
+	      var path = this.props.location.search.substr(1);
+	      if (this.props.loggedIn && path.length > 1) {
+	        console.log("pushing");
+	        this.props.history.push({ pathname: path });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -27383,13 +27427,11 @@
 	  return Login;
 	}(_react.Component);
 
-	// const mapStateToProps = (state) => {
-	//   return {
-	//     user: state.user,
-	//     uploadImage: state.uploadImage
-
-	//   }
-	// }
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    loggedIn: state.user.isAuth
+	  };
+	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return (0, _redux.bindActionCreators)({ setUser: _actions.setUser }, dispatch);
@@ -27402,7 +27444,7 @@
 	exports.default = (0, _reduxForm.reduxForm)({
 	  form: "login",
 	  fields: ['email', 'password']
-	}, null, mapDispatchToProps)(Login);
+	}, mapStateToProps, mapDispatchToProps)(Login);
 
 /***/ },
 /* 254 */
@@ -30318,7 +30360,7 @@
 /* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -30333,7 +30375,7 @@
 
 	function isAuth() {
 	  var state = _store2.default.getState();
-	  console.log(state.user.isAuth);
+	  console.log("state from isAuth is", state);
 	  return state.user.isAuth;
 	}
 
@@ -30419,12 +30461,13 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	var defaultState = { url: '', tags: [], folder: 'test', domain: '', note: '' };
+	var defaultState = { url: '', tags: [], folder: 'test', domain: '', note: '', description: '' };
 
 	function addUrl(state, data) {
 	  var newState = Object.assign({}, state);
 	  newState.url = data.srcUrl;
 	  newState.domain = (0, _utils.domainParse)(data.pageUrl);
+	  newState.description = data.alt;
 	  return newState;
 	}
 
@@ -30447,6 +30490,12 @@
 	  return newState;
 	}
 
+	function updateDescription(state, value) {
+	  var newState = Object.assign({}, state);
+	  newState.description = value;
+	  return newState;
+	}
+
 	var reducer = function reducer() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? defaultState : arguments[0];
 	  var action = arguments[1];
@@ -30460,6 +30509,8 @@
 	      return removeTag(state, action.index);
 	    case 'UPDATE_NOTES':
 	      return updateNotes(state, action.note);
+	    case 'UPDATE_DESCRIPTION':
+	      return updateDescription(state, action.value);
 	    default:
 	      return state;
 	  }
@@ -30487,7 +30538,7 @@
 /* 302 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -30502,11 +30553,13 @@
 	}
 
 	function setUser(state, user) {
+	  console.log("setting user - setUser");
 	  var newState = Object.assign({}, state, user);
 	  newState.isAuth = true;
 	  for (var key in newState.folders) {
 	    delete newState.folders[key].id;
 	  }
+	  console.log("newState", newState);
 	  return newState;
 	}
 
@@ -31850,6 +31903,7 @@
 	  var newState = Object.assign({}, state);
 	  newState.currentView = view;
 	  newState.currentFolder = folder;
+	  console.log(newState);
 	  return newState;
 	};
 

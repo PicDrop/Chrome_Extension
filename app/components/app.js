@@ -32,7 +32,7 @@ class App extends Component {
 function mapStateToProps (state) {
   return {
     url: state.url
-  }
+  };
 }
 
 export default connect(mapStateToProps)(App);

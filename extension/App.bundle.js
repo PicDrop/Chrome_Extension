@@ -83,7 +83,7 @@
 	), document.getElementById('picdrop_ex'));
 
 	//load tab data
-	chrome.extension.sendRequest({ cmd: "load" }, function (response) {
+	chrome.extension.sendRequest({ cmd: 'load' }, function (response) {
 	  if (response.pd_loggedIn) {
 	    _store2.default.dispatch((0, _actions.setUser)(response.user));
 	  }
@@ -92,15 +92,14 @@
 	chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 	  if (request.url) {
-	    var url = request.url.srcUrl;
 
 	    // Adding url to State
 	    _store2.default.dispatch((0, _actions.addUrl)(request.url));
 
-	    if (document.getElementById("picdrop").className === "closed") {
-	      document.getElementById("picdrop").className = "";
+	    if (document.getElementById('picdrop').className === 'closed') {
+	      document.getElementById('picdrop').className = '';
 	    }
-	    document.getElementById("picdrop").src = "chrome-extension://" + chromeID + "/iframe.html#/a/addimage";
+	    document.getElementById('picdrop').src = 'chrome-extension://' + chromeID + '/iframe.html#/a/addimage';
 	  }
 	});
 

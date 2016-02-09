@@ -1,6 +1,9 @@
 // Adding Iframe to page
+const chromeID = 'nlmfjalfhbaeclmijpiamgealocldiab'
+
 $(function(){
-  $('body').append('<iframe id="picdrop" class="closed" src="chrome-extension://nlmfjalfhbaeclmijpiamgealocldiab/iframe.html" frameborder="0"></iframe>');
+  // Add Image to Page
+  $('body').append('<iframe id="picdrop" class="closed" src="chrome-extension://' + chromeID + '/iframe.html#/a" frameborder="0"></iframe>');
 });
 
 // Sending Messages to content pages
@@ -8,31 +11,18 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     // Open and Close When clicking on Icon
     if (request.icon) {
-      console.log("tying to open and close")
-      
-      if ( $('#picdrop').hasClass("closed") ) {
-        $("#picdrop").removeClass("closed");
-        if (document.getElementById("picdrop").src !== "chrome-extension://nlmfjalfhbaeclmijpiamgealocldiab/iframe.html#/a/addimage")
-        document.getElementById("picdrop").src = "chrome-extension://nlmfjalfhbaeclmijpiamgealocldiab/iframe.html#/a"
-      } else {
-        $("#picdrop").addClass("closed");
-      }
+      $('#picdrop').hasClass("closed") ? $("#picdrop").removeClass("closed") : $("#picdrop").addClass("closed"); 
     }
-
+    // If clicking on image open side and update view to AddImage
     if (request.url) {
-      if ( $('#picdrop').hasClass("closed") ) {
-        $("#picdrop").removeClass("closed");
-      }
-      document.getElementById("picdrop").src = "chrome-extension://nlmfjalfhbaeclmijpiamgealocldiab/iframe.html#/a/addimage"
+      $('#picdrop').hasClass("closed") ? $("#picdrop").removeClass("closed") : document.getElementById("picdrop").src = "chrome-extension://" + chromeID + "/iframe.html#/a/addimage";    
     }
 
   });
 
 
-//save
 
-
-//load
-chrome.extension.sendRequest({cmd: "load"}, function(response) {
-    console.log("tab data:", response)
-});
+// //load
+// chrome.extension.sendRequest({cmd: "load"}, function(response) {
+//     console.log("tab data:", response)
+// });

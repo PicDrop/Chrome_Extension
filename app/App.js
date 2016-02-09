@@ -18,11 +18,10 @@ ReactDOM.render(
 
 
 //load tab data
-chrome.extension.sendRequest({cmd: "load"}, function(response) {
-    if (response.pd_loggedIn) { 
-      Store.dispatch(setUser(response.user));
-    }
-
+chrome.extension.sendRequest({cmd: 'load'}, function(response) {
+  if (response.pd_loggedIn) { 
+    Store.dispatch(setUser(response.user));
+  }
 });
 
 
@@ -30,15 +29,14 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     
     if (request.url) {
-      var url = request.url.srcUrl;
       
       // Adding url to State
       Store.dispatch(addUrl(request.url));
   
-      if ( document.getElementById("picdrop").className === "closed" ) {
-        document.getElementById("picdrop").className = "";
+      if ( document.getElementById('picdrop').className === 'closed' ) {
+        document.getElementById('picdrop').className = '';
       }
-      document.getElementById("picdrop").src = "chrome-extension://" + chromeID + "/iframe.html#/a/addimage"
+      document.getElementById('picdrop').src = 'chrome-extension://' + chromeID + '/iframe.html#/a/addimage';
     }
 
   });

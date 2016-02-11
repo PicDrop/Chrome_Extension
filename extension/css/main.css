@@ -66,7 +66,7 @@ body {
   align-items: center;
   justify-content: space-between; }
   .top_nav header img {
-    max-width: 30px; }
+    width: 30px; }
 
 nav.top_nav {
   height: 45px;

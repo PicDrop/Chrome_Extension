@@ -32,9 +32,38 @@ export function addUrl (data) {
 
 export function updateNotes (note) {
   return {
-    type: "UPDATE_NOTES",
+    type: 'UPDATE_NOTES',
     note: note
-  }
+  };
+}
+
+export function updateTitle (value) {
+  return {
+    type: 'UPDATE_DESCRIPTION',
+    value: value
+  };
+}
+
+export function setCurrentFolder (folder) {
+  return {
+    type: 'SET_CURRENT_FOLDER',
+    folder: folder
+  };
+}
+
+export function setCurrentView (view) {
+  return {
+    type: 'SET_CURRENT_VIEW',
+    view: view
+  };
+}
+
+export function setViewAndFolder (view, folder) {
+  return {
+    type: 'SET_CURRENT_VIEW_FOLDER',
+    view: view,
+    folder: folder
+  };
 }
 
 

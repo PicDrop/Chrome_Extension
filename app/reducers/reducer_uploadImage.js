@@ -1,12 +1,15 @@
 import { domainParse } from '../utils'
-const defaultState = {url: '', tags: [], folder: 'test', domain: '', note: ''};
+const defaultState = {url: '', tags: [], folder: 'test', domain: '', note: '', title: ''};
+
 
 
 
 function addUrl(state, data) {
+  console.log(data)
   const newState = Object.assign({}, state);
   newState.url = data.srcUrl;
   newState.domain = domainParse(data.pageUrl);
+  newState.title = data.alt;
   return newState;
 }
 
@@ -29,6 +32,12 @@ function updateNotes (state, note) {
   return newState;
 }
 
+function updateDescription (state, value) {
+  const newState = Object.assign({}, state);
+  newState.description = value;
+  return newState;
+}
+
 
 const reducer = (state = defaultState, action) => {
   switch(action.type){
@@ -39,9 +48,11 @@ const reducer = (state = defaultState, action) => {
     case 'REMOVE_TAG':
       return removeTag(state, action.index);
     case 'UPDATE_NOTES':
-      return updateNotes(state, action.note)
+      return updateNotes(state, action.note);
+    case 'UPDATE_DESCRIPTION':
+      return updateDescription(state, action.value);
     default:
-    return state;
+      return state;
   }
 
 };

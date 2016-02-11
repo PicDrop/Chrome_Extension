@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import TagInput from './AddTags/TagInput';
 import TagsList from './AddTags/TagsList';
 import Nav from '../Header/Nav';
+import SelectFolder from './SelectFolder';
 import { connect } from 'react-redux';
-import { updateNotes } from '../../actions';
+import { updateNotes, updateTitle } from '../../actions';
 import { bindActionCreators } from 'redux';
 
 
@@ -11,12 +12,15 @@ class ContentWrapper extends Component {
   constructor(props) {
     super(props);
     this.updateNoteVal = this.updateNoteVal.bind(this);
+    this.updateTitleVal = this.updateTitleVal.bind(this);
   }
   updateNoteVal(e) {
     this.props.updateNotes(e.target.value);
   }
+  updateTitleVal(e) {
+    this.props.updateTitle(e.target.value);
+  }
   render() {
-    
     return (
       <div className="height_100"> 
         <Nav history={this.props.history}/>
@@ -29,7 +33,14 @@ class ContentWrapper extends Component {
           <section className="form_wrapper">
             <section className="category">
               <span className="title_header">FOLDER</span>
-              <span className="folder_name">Iphone designs</span>
+              <SelectFolder folder={this.props.folder}/>
+            </section>
+
+            <section className="tags">
+              <span className="title_header">TITLE</span>
+              <div className="input_form">
+                <input type="text" placeholder="Add a title" value={this.props.title} onChange={this.updateTitleVal} />
+              </div>
             </section>
 
             <section className="tags">
@@ -49,18 +60,15 @@ class ContentWrapper extends Component {
                 <textarea 
                   value={this.props.note}
                   onChange={this.updateNoteVal}
-                  placeholder="Add Some Notes..."></textarea>
+                  placeholder="Add Some Notes...">
+                </textarea>
               </div>
             </section>
-
-            <form>
-              
-            </form>
           </section>
         </section>
       </div>
     );
-  };
+  }
 }
 
 function mapStateToProps (state) {
@@ -68,12 +76,14 @@ function mapStateToProps (state) {
     tags: state.uploadImage.tags,
     url: state.uploadImage.url,
     domain: state.uploadImage.domain,
-    note: state.uploadImage.note
+    note: state.uploadImage.note,
+    folder: state.app.currentFolder,
+    title: state.uploadImage.title
   };
 }
 
 function mapDispatchToState (dispatch) {
-  return bindActionCreators({ updateNotes }, dispatch);
+  return bindActionCreators({ updateNotes, updateTitle }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToState)(ContentWrapper);

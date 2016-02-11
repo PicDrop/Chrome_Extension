@@ -5,9 +5,10 @@ import Nav from './Nav';
 
 class HeaderWapper extends Component {
   render() {
+    console.log("this props from headerwrapper", this.props)
     return (
       <div className="top_nav">
-        <Header />
+        <Header history={this.props.history}/>
         
       </div>
     );

@@ -5,7 +5,7 @@ import routes from './routes.js';
 import { Provider } from 'react-redux';
 import Store from './store';
 import { setUser, addUrl } from './actions';
-
+const chromeID = 'nlmfjalfhbaeclmijpiamgealocldiab'
 
 ReactDOM.render(
   <Provider store={Store}>
@@ -14,41 +14,23 @@ ReactDOM.render(
   document.getElementById('picdrop_ex')
 );
 
+// load tab data and setUser
+chrome.extension.sendRequest({cmd: 'load'}, function(response) {
+  if (response.pd_loggedIn) { 
+    Store.dispatch(setUser(response.user));
+  }
+});
 
-
-
-//load tab data
-chrome.extension.sendRequest({cmd: "load"}, function(response) {
-   console.log(response)
-   var data = response.user;
-   data.token = response.pd_token;
-   console.log(data); 
-
-    if (response.pd_loggedIn) {  
-      Store.dispatch(setUser(data));
+// Listening for Content messages
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.setImage) {
+      // Adding image data to State for Addimage View
+      Store.dispatch(addUrl(request.setImage));
     }
-
 });
 
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    
-    if (request.url) {
-      var url = request.url.srcUrl;
-      console.log("request object", request)
-      
-      Store.dispatch(addUrl(request.url));
-      
-      console.log("state", Store.getState())
-      console.log( parent.document )
-      if ( document.getElementById("picdrop").className === "closed" ) {
-        document.getElementById("picdrop").className = "";
-      }
-      document.getElementById("picdrop").src = "chrome-extension://nlmfjalfhbaeclmijpiamgealocldiab/iframe.html#/a/addimage"
-    }
-
-  });
 
 
 

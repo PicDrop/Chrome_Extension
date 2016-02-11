@@ -25,14 +25,9 @@ class FolderView extends Component {
 }
 
 const mapToStateProps = (state, props) => {
-  console.log("inside map", props)
-  
-
-  let folder = state.user.folders[props.params.name];
-  delete folder["id"];
+  const folder = state.user.folders[props.params.name];
   const picIDs = Object.keys(folder);
   const folderPics = picIDs.map((picID) => {
-    if (picID === "id") return;
     return state.user.userPics[picID]
   })
 

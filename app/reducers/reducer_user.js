@@ -8,12 +8,13 @@ function login(state, user) {
 }
 
 function setUser(state, user) {
-  console.log("incoming state", state);
-  console.log("incoming user", user);
-  const newState = Object.assign({}, state, user );
+  console.log("setting user - setUser")
+  const newState = Object.assign({}, state, user);
   newState.isAuth = true;
-  
-  console.log("setting user", newState);
+  for (var key in newState.folders) {
+    delete newState.folders[key].id;
+  }  
+  console.log("newState", newState)
   return newState;
 }
 
@@ -25,7 +26,7 @@ const reducer = (state = defaultState, action) => {
     case 'SET_USER':
       return setUser(state, action.user);
     default:
-    return state;
+      return state;
   }
 
 };

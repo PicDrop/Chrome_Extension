@@ -43,6 +43,11 @@ chrome.runtime.onMessage.addListener(
   }
 );
 
+// var testFrame = document.createElement("IFRAME");
+//   testFrame.id = "picdrop";
+//   testFrame.src = 'chrome-extension://' + chromeID + '/iframe.html#/';
+//   document.body.appendChild(testFrame);
+
 
 
 

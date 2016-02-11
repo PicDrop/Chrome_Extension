@@ -39,7 +39,7 @@ export function updateNotes (note) {
 
 export function updateTitle (value) {
   return {
-    type: 'UPDATE_DESCRIPTION',
+    type: 'UPDATE_TITLE',
     value: value
   };
 }
@@ -47,6 +47,13 @@ export function updateTitle (value) {
 export function setCurrentFolder (folder) {
   return {
     type: 'SET_CURRENT_FOLDER',
+    folder: folder
+  };
+}
+
+export function addFolder (folder) {
+  return {
+    type: 'ADD_FOLDER',
     folder: folder
   };
 }
@@ -63,6 +70,19 @@ export function setViewAndFolder (view, folder) {
     type: 'SET_CURRENT_VIEW_FOLDER',
     view: view,
     folder: folder
+  };
+}
+
+export function addImageToState (data) {
+  return {
+    type: 'ADD_IMAGE_TO_STATE',
+    data: data
+  };
+}
+
+export function clearAddImageState () {
+  return {
+    type: 'CLEAR_ADD_IMAGE_STATE'
   };
 }
 

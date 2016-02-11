@@ -1,5 +1,5 @@
 import { domainParse } from '../utils'
-const defaultState = {url: '', tags: [], folder: 'test', domain: '', note: '', title: ''};
+const defaultState = {url: '', tags: [], domain: '', note: '', title: ''};
 
 
 
@@ -16,6 +16,7 @@ function addUrl(state, data) {
 function addTag (state, tag) {
   const newState = Object.assign({}, state);
   newState.tags = [...state.tags, tag];
+  console.log("TAgs", newState)
   return newState;
 }
 
@@ -32,11 +33,12 @@ function updateNotes (state, note) {
   return newState;
 }
 
-function updateDescription (state, value) {
+function updateTitle (state, value) {
   const newState = Object.assign({}, state);
-  newState.description = value;
+  newState.title = value;
   return newState;
 }
+
 
 
 const reducer = (state = defaultState, action) => {
@@ -49,8 +51,10 @@ const reducer = (state = defaultState, action) => {
       return removeTag(state, action.index);
     case 'UPDATE_NOTES':
       return updateNotes(state, action.note);
-    case 'UPDATE_DESCRIPTION':
-      return updateDescription(state, action.value);
+    case 'UPDATE_TITLE':
+      return updateTitle(state, action.value);
+    case 'CLEAR_ADD_IMAGE_STATE':
+      return defaultState
     default:
       return state;
   }

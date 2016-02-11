@@ -15,21 +15,19 @@ class SelectFolder extends Component {
     this.setState({modalStyle: 'block'});
   }
   componentWillReceiveProps(nextProps) {
-    console.log("incoming", nextProps, this.state)
     if (nextProps.folder && this.state.color == '#ED1E79') {
       this.setState({
-        color: "#777777"
+        color: '#777777'
       });
     }
   }
   folderShowName() {
-    if ( this.props.folder ) {
+    if ( this.props.folder !== '' ) {
       return this.props.folder;
     }
-    return 'Select A Folder'
+    return 'Select A Folder';
   }
   render() {
-    console.log(this.state)
     return (
       <div>
         <div className="select_folder_wrapper">

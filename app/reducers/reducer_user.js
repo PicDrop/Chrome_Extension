@@ -1,4 +1,3 @@
-
 const defaultState = {isAuth: false};
 
 function login(state, user) {
@@ -8,14 +7,32 @@ function login(state, user) {
 }
 
 function setUser(state, user) {
-  console.log("setting user - setUser")
   const newState = Object.assign({}, state, user);
   newState.isAuth = true;
   for (var key in newState.folders) {
     delete newState.folders[key].id;
   }  
-  console.log("newState", newState)
   return newState;
+}
+
+function addFolder (state, folder) {
+  const newState = Object.assign({}, state);
+  newState.folders[folder] = {};
+  return newState;
+}
+
+function addImageToState (state, data) {
+  const newState = Object.assign({}, state);
+  newState.folders[data.folder][data.url] = true;
+  newState.userPics[data.url] = {
+    domain: data.domain,
+    tags: data.tags,
+    url: data.url,
+    title: data.title,
+    note: data.note
+  };
+  console.log("newState addImage to State", newState)
+  return newState 
 }
 
 
@@ -25,6 +42,10 @@ const reducer = (state = defaultState, action) => {
       return login(state, action.user);
     case 'SET_USER':
       return setUser(state, action.user);
+    case 'ADD_FOLDER':
+      return addFolder(state, action.folder);
+    case 'ADD_IMAGE_TO_STATE':
+      return addImageToState(state, action.data);
     default:
       return state;
   }

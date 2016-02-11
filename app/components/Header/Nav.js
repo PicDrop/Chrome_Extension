@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import ROOT_URL from '../../Config/rooturl';
-
+import { addImageToState, clearAddImageState } from '../../actions';
 
 
 class Nav extends Component {
@@ -19,7 +20,9 @@ class Nav extends Component {
     axios.post(ROOT_URL + 'user/createDrop', this.props.imageInfo)
       .then((res) => {
         console.log('success', res);
+        this.props.addImageToState(this.props.imageInfo);
         this.props.history.push({ pathname: '/a' });
+        this.props.clearAddImageState();
       });
   }
 
@@ -41,13 +44,19 @@ class Nav extends Component {
 
 
 function mapPropsToState (state) {
+  let imageDataObj = state.uploadImage;
+  imageDataObj.folder = state.app.currentFolder;
+
   return {
     user: state.user,
-    imageInfo: state.uploadImage
+    imageInfo: state.uploadImage,
   };
 }
 
+function mapDispatchToState (dispatch) {
+  return bindActionCreators({addImageToState, clearAddImageState}, dispatch)
+}
 
 // export default Nav;
 
-export default connect(mapPropsToState)(Nav);
+export default connect(mapPropsToState,mapDispatchToState)(Nav);

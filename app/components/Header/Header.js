@@ -16,7 +16,7 @@ class Header extends Component {
     return <i onClick={this.goBack} className="material-icons">arrow_back</i>;
   }
   goBack(){
-    this.props.setViewAndFolder('main', null);
+    this.props.setViewAndFolder('main', '');
     this.props.history.goBack();
   }
   render() {

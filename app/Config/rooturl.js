@@ -1,3 +1,5 @@
-const ROOT_URL = 'https://localhost:4000/api/';
+const ROOT_URL = 'https://picdrop.herokuapp.com/api/';
+
+
 
 export default ROOT_URL;

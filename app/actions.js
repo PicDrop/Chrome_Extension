@@ -17,7 +17,6 @@ export function removeTag (index) {
 }
 
 export function setUser (user) {
-  console.log("setting user")
   return {
     type: 'SET_USER',
     user: user
@@ -33,14 +32,14 @@ export function addUrl (data) {
 
 export function updateNotes (note) {
   return {
-    type: "UPDATE_NOTES",
+    type: 'UPDATE_NOTES',
     note: note
   };
 }
 
-export function updateDescription (value) {
+export function updateTitle (value) {
   return {
-    type: "UPDATE_DESCRIPTION",
+    type: 'UPDATE_DESCRIPTION',
     value: value
   };
 }

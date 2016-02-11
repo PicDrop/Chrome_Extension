@@ -1,14 +1,15 @@
 import { domainParse } from '../utils'
-const defaultState = {url: '', tags: [], folder: 'test', domain: '', note: '', description: ''};
+const defaultState = {url: '', tags: [], folder: 'test', domain: '', note: '', title: ''};
 
 
 
 
 function addUrl(state, data) {
+  console.log(data)
   const newState = Object.assign({}, state);
   newState.url = data.srcUrl;
   newState.domain = domainParse(data.pageUrl);
-  newState.description = data.alt;
+  newState.title = data.alt;
   return newState;
 }
 

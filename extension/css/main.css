@@ -284,6 +284,61 @@ button {
       .add_image .tags .tag i {
         font-size: 10px !important;
         padding-left: 10px; }
+  .add_image .select_folder_wrapper {
+    padding-bottom: 10px; }
+    .add_image .select_folder_wrapper > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 30px; }
+    .add_image .select_folder_wrapper i {
+      color: #777;
+      transition: 0.2s; }
+      .add_image .select_folder_wrapper i:hover {
+        color: #ED1E79; }
+    .add_image .select_folder_wrapper .folder_name {
+      padding-bottom: 0; }
+
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3); }
+  .modal .content {
+    max-height: 300px;
+    width: 350px;
+    background: #FFF;
+    margin: 0 auto;
+    margin-top: 150px;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1); }
+    .modal .content ul, .modal .content li {
+      padding: 0;
+      margin: 0; }
+    .modal .content ul {
+      padding-left: 30px;
+      padding-right: 20px; }
+    .modal .content li {
+      padding: 10px 0;
+      color: #444;
+      cursor: pointer;
+      border-bottom: 1px solid #FAFAFA;
+      display: flex;
+      align-items: center; }
+      .modal .content li i {
+        color: #e8e8e8;
+        position: relative;
+        left: -30px; }
+    .modal .content header {
+      height: 50px;
+      padding: 15px 0 0 15px;
+      background: #eee;
+      color: #444;
+      font-weight: 300; }
+    .modal .content section {
+      max-height: 250px;
+      padding: 10px 0 10px 10px; }
 
 .dashboard {
   padding: 30px 25px;

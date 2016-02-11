@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import TagInput from './AddTags/TagInput';
 import TagsList from './AddTags/TagsList';
 import Nav from '../Header/Nav';
+import SelectFolder from './SelectFolder';
 import { connect } from 'react-redux';
-import { updateNotes, updateDescription } from '../../actions';
+import { updateNotes, updateTitle } from '../../actions';
 import { bindActionCreators } from 'redux';
 
 
@@ -11,13 +12,13 @@ class ContentWrapper extends Component {
   constructor(props) {
     super(props);
     this.updateNoteVal = this.updateNoteVal.bind(this);
-    this.updateDescriptionVal = this.updateDescriptionVal.bind(this);
+    this.updateTitleVal = this.updateTitleVal.bind(this);
   }
   updateNoteVal(e) {
     this.props.updateNotes(e.target.value);
   }
-  updateDescriptionVal(e) {
-    this.props.updateDescription(e.target.value);
+  updateTitleVal(e) {
+    this.props.updateTitle(e.target.value);
   }
   render() {
     return (
@@ -32,13 +33,13 @@ class ContentWrapper extends Component {
           <section className="form_wrapper">
             <section className="category">
               <span className="title_header">FOLDER</span>
-              <span className="folder_name">{this.props.folder}</span>
+              <SelectFolder folder={this.props.folder}/>
             </section>
 
             <section className="tags">
-              <span className="title_header">DESCRIPTION</span>
+              <span className="title_header">TITLE</span>
               <div className="input_form">
-                <input type="text" placeholder="Add a title" value={this.props.description} onChange={this.updateDescriptionVal} />
+                <input type="text" placeholder="Add a title" value={this.props.title} onChange={this.updateTitleVal} />
               </div>
             </section>
 
@@ -77,12 +78,12 @@ function mapStateToProps (state) {
     domain: state.uploadImage.domain,
     note: state.uploadImage.note,
     folder: state.app.currentFolder,
-    description: state.uploadImage.description
+    title: state.uploadImage.title
   };
 }
 
 function mapDispatchToState (dispatch) {
-  return bindActionCreators({ updateNotes, updateDescription }, dispatch);
+  return bindActionCreators({ updateNotes, updateTitle }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToState)(ContentWrapper);

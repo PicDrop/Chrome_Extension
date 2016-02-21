@@ -73,11 +73,11 @@ class SelectFolderModal extends Component {
 }
 
 const mapPropsToState = (state) => {
-  const folders = Object.keys(state.user.folders)
+  const folders = Object.keys(state.user.folders);
   return {
     folders: folders
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators( { setCurrentFolder, addFolder } , dispatch );

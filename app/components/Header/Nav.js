@@ -7,8 +7,6 @@ import { addImageToState, clearAddImageState } from '../../actions';
 
 
 class Nav extends Component {
-  
-
   constructor(props) {
     super(props);
     this.uploadImage = this.uploadImage.bind(this);
@@ -16,7 +14,7 @@ class Nav extends Component {
 
   uploadImage() {
     axios.defaults.headers.common['Authorization'] = "Bearer " + this.props.user.token;
-    console.log("sending - ", this.props.imageInfo)
+    console.log("sending - ", this.props.imageInfo);
     axios.post(ROOT_URL + 'user/createDrop', this.props.imageInfo)
       .then((res) => {
         console.log('success', res);
@@ -27,7 +25,7 @@ class Nav extends Component {
   }
 
   render() {
-    console.log("props from NAV", this.context)
+    console.log("props from NAV", this.context);
     return (
       <nav className="top_nav">
         <div className="title">

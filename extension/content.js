@@ -1,5 +1,5 @@
 // Adding Iframe to page
-const chromeID = 'nlmfjalfhbaeclmijpiamgealocldiab';
+const chromeID = 'dkeaeobllglbgicoiicbfbnefkenpgma';
 
 
 $(function(){
@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener(
         }
       } else {
         $('#picdrop').addClass('closed');
-      }  
+      }
     }
     //If clicking on image open side and update view to AddImage
     if (request.url) {
@@ -34,11 +34,11 @@ chrome.runtime.onMessage.addListener(
 
       // Send updated request obj to background.js
       chrome.extension.sendMessage({ type: 'setAlt', data: request.url }, function(res) {});
-    
+
       if ( $('#picdrop').hasClass('closed') ) {
         $('#picdrop').removeClass('closed');
-      }   
-      document.getElementById('picdrop').src = 'chrome-extension://' + chromeID + '/iframe.html#/a/addimage'; 
+      }
+      document.getElementById('picdrop').src = 'chrome-extension://' + chromeID + '/iframe.html#/a/addimage';
     }
   }
 );
@@ -47,8 +47,3 @@ chrome.runtime.onMessage.addListener(
 //   testFrame.id = "picdrop";
 //   testFrame.src = 'chrome-extension://' + chromeID + '/iframe.html#/';
 //   document.body.appendChild(testFrame);
-
-
-
-
-

@@ -5,7 +5,7 @@ import routes from './routes.js';
 import { Provider } from 'react-redux';
 import Store from './store';
 import { setUser, addUrl } from './actions';
-const chromeID = 'nlmfjalfhbaeclmijpiamgealocldiab'
+import chromeID from '../chromeID.js';
 
 ReactDOM.render(
   <Provider store={Store}>
@@ -16,7 +16,7 @@ ReactDOM.render(
 
 // load tab data and setUser
 chrome.extension.sendRequest({cmd: 'load'}, function(response) {
-  if (response.pd_loggedIn) { 
+  if (response.pd_loggedIn) {
     Store.dispatch(setUser(response.user));
   }
 });
@@ -29,16 +29,3 @@ chrome.runtime.onMessage.addListener(
       Store.dispatch(addUrl(request.setImage));
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-

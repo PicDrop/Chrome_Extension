@@ -1,3 +1,7 @@
+chromeID.js
+
+extension/App.bundle.js
+
 # Logs
 logs
 *.log
@@ -31,3 +35,6 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+# Zipped distribution package
+.zip

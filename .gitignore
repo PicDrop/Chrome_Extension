@@ -1,5 +1,7 @@
 chromeID.js
 
+extension/App.bundle.js
+
 # Logs
 logs
 *.log

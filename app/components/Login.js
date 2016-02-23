@@ -10,11 +10,13 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      submission: 'login'
+      submission: 'login',
+      subCursor: 'auto'
     };
     this.submit = this.submit.bind(this);
     this.pushToNextState = this.pushToNextState.bind(this);
     this.switchMessage = this.switchMessage.bind(this);
+    this.changeCursor = this.changeCursor.bind(this);
   }
 
   submit(data) {
@@ -53,6 +55,11 @@ class Login extends Component {
     this.setState({ submission });
   }
 
+  changeCursor() {
+    const subCursor = this.state.subCursor === 'auto' ? 'pointer' : 'auto';
+    this.setState({ subCursor });
+  }
+
   render() {
     const formMessage = this.state.submission === 'login' ?
       { h5: 'Not a user?', span: 'Sign Up Now' } : { h5: 'Already a user?', span: 'Sign In Now' };
@@ -75,13 +82,17 @@ class Login extends Component {
             <div className="form_input">
               <input type="password" placeholder="Password" { ...password }/>
             </div>
-            <button type="submit">{ buttonw }</button>
+            <button type="submit">{ button }</button>
           </form>
 
         </div>
         <section className="sign_up">
           <h5>{ formMessage.h5 }</h5>
-          <span onClick={ this.switchMessage }>{ formMessage.span }</span>
+          <span onClick={ this.switchMessage }
+            onMouseEnter={ this.changeCursor }
+            onMouseLeave={ this.changeCursor }
+            style={{ cursor: this.state.subCursor }}
+          >{ formMessage.span }</span>
         </section>
       </section>
     );

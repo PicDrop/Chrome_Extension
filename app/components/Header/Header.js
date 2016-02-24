@@ -6,18 +6,30 @@ import { setViewAndFolder } from '../../actions';
 class Header extends Component {
   constructor() {
     super();
+    this.state = {
+      logoutCursor: 'auto',
+    }
     this.showHamburgOrArrow = this.showHamburgOrArrow.bind(this);
     this.goBack = this.goBack.bind(this);
+    this.logout = this.logout.bind(this);
+    this.changeCursor = this.changeCursor.bind(this);
   }
   showHamburgOrArrow() {
     if (this.props.view === 'main') {
       return <i className="material-icons">menu</i>;
-    } 
+    }
     return <i onClick={this.goBack} className="material-icons">arrow_back</i>;
   }
-  goBack(){
+  goBack() {
     this.props.setViewAndFolder('main', '');
     this.props.history.goBack();
+  }
+  logout() {
+    this.props.history.push({pathname: 'login'});
+  }
+  changeCursor() {
+    const logoutCursor = this.state.logoutCursor === 'auto' ? 'pointer' : 'auto';
+    this.setState({ logoutCursor });
   }
   render() {
     return (
@@ -29,7 +41,12 @@ class Header extends Component {
           <img src='logo.svg' />
         </div>
         <div className="flex-1">
-          <i className="material-icons">clear</i>
+          <i className="material-icons"
+            onClick={ this.logout }
+            onMouseEnter={ this.changeCursor }
+            onMouseLeave={ this.changeCursor }
+            style={{ cursor: this.state.logoutCursor }}
+          >clear</i>
         </div>
 
       </header>

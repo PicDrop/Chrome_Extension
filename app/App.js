@@ -5,7 +5,6 @@ import routes from './routes.js';
 import { Provider } from 'react-redux';
 import Store from './store';
 import { setUser, addUrl } from './actions';
-const chromeID = 'chhcallbfilklbdmmbeldclpekaeimnk';
 
 ReactDOM.render(
   <Provider store={Store}>
